@@ -6,15 +6,15 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private List<Pokemon> myPokemons;
-    private List<Pokemon> favouritePokemons;
-    private List<Pokemon> wishList;
+    private List<MyPokemon> myMyPokemons;
+    private List<MyPokemon> favouriteMyPokemons;
+    private List<MyPokemon> wishList;
 
-    public void addToList(List list, Pokemon pokemon ) {
+    public void addToList(List list, MyPokemon myPokemon) {
 
     }
 
-    public void removeFroList(List list, Pokemon pokemon) {
+    public void removeFroList(List list, MyPokemon myPokemon) {
 
     }
 

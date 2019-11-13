@@ -1,9 +1,17 @@
 package com.codecool.pokemoncompanion.service;
 
-import com.codecool.pokemoncompanion.model.Pokemon;
+import com.codecool.pokemoncompanion.model.MyPokemon;
+
 
 public class PokemonCreator {
-    public Pokemon createPokemon() {
-        return new Pokemon();
+
+    private PokeAPIService pokeApiService;
+    public MyPokemon createPokemon() {
+
+        return null;
     }
+
+//    public Pokemon createPokemonFromJson(JSONObject jsonboject){
+//
+//    }
 }

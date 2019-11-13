@@ -27,6 +27,7 @@ public class PokeAPIService {
         return responseEntity.getBody().getResults();
     }
 
+
     public Pokemon getPokemon(int id)  {
         String apiPath = "https://pokeapi.co/api/v2/pokemon/" + id;
         RestTemplate restTemplate = new RestTemplate();

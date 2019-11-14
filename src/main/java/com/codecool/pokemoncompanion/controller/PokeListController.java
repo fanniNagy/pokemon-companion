@@ -6,11 +6,14 @@ import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RequestMapping("/pokemon")
 @RestController
 public class PokeListController {
@@ -24,7 +27,6 @@ public class PokeListController {
     @Autowired
     private User user;
 
-    @CrossOrigin
     @GetMapping("/")
     public List<ResultsItem> pokes() {
         return pokeAPIService.getPokemons(20, 0);
@@ -44,6 +46,16 @@ public class PokeListController {
     @PostMapping("/mypokemon/add/{id}")
     public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId){
         user.addToList(user.getMyMyPokemons(), getMyPokemonById(pokemonId));
+    }
+
+    @PostMapping("/favourites/add/{id}")
+    public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId){
+        user.addToList(user.getFavouriteMyPokemons(), getMyPokemonById(pokemonId));
+    }
+
+    @PostMapping("/wishlist/add/{id}")
+    public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId){
+        user.addToList(user.getWishList(), getMyPokemonById(pokemonId));
     }
 
     private MyPokemon getMyPokemonById(int id){

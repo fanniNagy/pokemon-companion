@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class PokemonCreator {
 
-    private PokeAPIService pokeApiService;
     public MyPokemon createPokemon(Pokemon pokemon) {
         return new MyPokemon(
                 pokemon.getId(),
@@ -22,7 +21,4 @@ public class PokemonCreator {
                 pokemon.getWeight());
     }
 
-//    public Pokemon createPokemonFromJson(JSONObject jsonboject){
-//
-//    }
 }

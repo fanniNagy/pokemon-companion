@@ -2,6 +2,7 @@ package com.codecool.pokemoncompanion.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -9,9 +10,9 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private List<MyPokemon> myMyPokemons;
-    private List<MyPokemon> favouriteMyPokemons;
-    private List<MyPokemon> wishList;
+    private List<MyPokemon> myMyPokemons = new ArrayList<>();
+    private List<MyPokemon> favouriteMyPokemons = new ArrayList<>();
+    private List<MyPokemon> wishList = new ArrayList<>();
 
     public void addToList(List list, MyPokemon myPokemon) {
         list.add(myPokemon);

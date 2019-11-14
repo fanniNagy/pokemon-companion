@@ -11,11 +11,11 @@ public class User {
     private List<MyPokemon> wishList;
 
     public void addToList(List list, MyPokemon myPokemon) {
-
+        list.add(myPokemon);
     }
 
     public void removeFroList(List list, MyPokemon myPokemon) {
-
+        list.remove(myPokemon);
     }
 
 }

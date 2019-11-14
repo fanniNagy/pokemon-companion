@@ -58,6 +58,21 @@ public class PokeListController {
         user.addToList(user.getWishList(), getMyPokemonById(pokemonId));
     }
 
+    @GetMapping("/mypokemon/")
+    public List<MyPokemon> getMyMyPokemons(){
+        return user.getMyMyPokemons();
+    }
+
+    @GetMapping("/favourites/")
+    public List<MyPokemon> getMyFavourites(){
+        return user.getFavouriteMyPokemons();
+    }
+
+    @GetMapping("/wishlist/")
+    public List<MyPokemon> getMyWishList(){
+        return user.getWishList();
+    }
+
     private MyPokemon getMyPokemonById(int id){
         Pokemon pokemon =  pokeAPIService.getPokemonByID(id);
         return pokemonCreator.createPokemon(pokemon);

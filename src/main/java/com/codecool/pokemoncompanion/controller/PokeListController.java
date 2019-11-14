@@ -1,6 +1,7 @@
 package com.codecool.pokemoncompanion.controller;
 
 import com.codecool.pokemoncompanion.model.MyPokemon;
+import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
@@ -20,22 +21,18 @@ public class PokeListController {
     @Autowired
     private PokeAPIService pokeAPIService;
 
+    @Autowired
+    private User user;
 
     @CrossOrigin
     @GetMapping("/")
     public List<ResultsItem> pokes() {
-        return pokeAPIService.getPokemons(20, 1);
+        return pokeAPIService.getPokemons(20, 0);
     }
-//
-//    @GetMapping("/poke/{id}")
-//    public Pokemon poke(@PathVariable("id") int id) {
-//        return pokeAPIService.getPokemonByID(id);
-//    }
 
     @GetMapping("/id/{id}")
     public MyPokemon pokemonByID(@PathVariable("id") int id) {
-        Pokemon pokemon =  pokeAPIService.getPokemonByID(id);
-        return pokemonCreator.createPokemon(pokemon);
+        return getMyPokemonById(id);
     }
 
     @GetMapping("/name/{name}")
@@ -44,5 +41,13 @@ public class PokeListController {
         return pokemonCreator.createPokemon(pokemon);
     }
 
+    @PostMapping("/mypokemon/add/{id}")
+    public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId){
+        user.addToList(user.getMyMyPokemons(), getMyPokemonById(pokemonId));
+    }
 
+    private MyPokemon getMyPokemonById(int id){
+        Pokemon pokemon =  pokeAPIService.getPokemonByID(id);
+        return pokemonCreator.createPokemon(pokemon);
+    }
 }

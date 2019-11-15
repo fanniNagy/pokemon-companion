@@ -39,6 +39,7 @@ public class PokeListController {
 
     @GetMapping("/name/{name}")
     public MyPokemon pokemonByName(@PathVariable("name") String name) {
+        name = name.toLowerCase();
         Pokemon pokemon =  pokeAPIService.getPokemonByName(name);
         return pokemonCreator.createPokemon(pokemon);
     }

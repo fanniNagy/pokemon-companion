@@ -1,6 +1,7 @@
 package com.codecool.pokemoncompanion.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
 public class User {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;     //legyen Integer?
 
     private String name;
     private String email;

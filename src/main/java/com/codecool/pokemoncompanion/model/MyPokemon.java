@@ -4,6 +4,7 @@ import com.codecool.pokemoncompanion.model.generated.Ability;
 import com.codecool.pokemoncompanion.model.generated.Type;
 import com.codecool.pokemoncompanion.model.generated.TypesItem;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,14 +14,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
 
-@Entity
+
 @Data
 @NoArgsConstructor
+@Builder
+@Entity
 public class MyPokemon {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     private String name;
     @ElementCollection

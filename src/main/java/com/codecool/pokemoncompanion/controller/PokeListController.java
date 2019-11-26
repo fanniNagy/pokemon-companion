@@ -4,6 +4,7 @@ import com.codecool.pokemoncompanion.model.MyPokemon;
 import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
+import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 @CrossOrigin
@@ -31,7 +33,7 @@ public class PokeListController {
     }
 
     @GetMapping("/")
-    public List<ResultsItem> pokes() {
+    public List<ResultItemWithId> pokes() {
         return pokeAPIService.getPokemons(20, 0);
     }
 

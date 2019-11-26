@@ -9,6 +9,7 @@ import com.codecool.pokemoncompanion.service.PokemonCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +19,16 @@ import java.util.List;
 @RestController
 public class PokeListController {
 
-    @Autowired
     private PokemonCreator pokemonCreator;
-
-    @Autowired
     private PokeAPIService pokeAPIService;
+    private User user;
 
     @Autowired
-    private User user;
+    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, User user) {
+        this.pokemonCreator = pokemonCreator;
+        this.pokeAPIService = pokeAPIService;
+        this.user = user;
+    }
 
     @GetMapping("/")
     public List<ResultsItem> pokes() {

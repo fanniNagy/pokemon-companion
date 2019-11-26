@@ -3,9 +3,11 @@ package com.codecool.pokemoncompanion.model;
 import com.codecool.pokemoncompanion.model.generated.Ability;
 import com.codecool.pokemoncompanion.model.generated.Type;
 import com.codecool.pokemoncompanion.model.generated.TypesItem;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class MyPokemon {
 
     private int id;
@@ -33,43 +35,4 @@ public class MyPokemon {
         this.weight = weight;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public List<Type> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<Type> types) {
-        this.types = types;
-    }
-
-    public List<Ability> getAbilities() {
-        return abilities;
-    }
-
-    public void setAbilities(List<Ability> abilities) {
-        this.abilities = abilities;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 }

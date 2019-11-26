@@ -2,10 +2,12 @@ package com.codecool.pokemoncompanion.model;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Entity
 public class User {
     private int id;
     private String name;

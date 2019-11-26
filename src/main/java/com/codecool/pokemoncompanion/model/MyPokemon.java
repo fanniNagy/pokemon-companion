@@ -4,8 +4,10 @@ import com.codecool.pokemoncompanion.model.generated.Ability;
 import com.codecool.pokemoncompanion.model.generated.Type;
 import com.codecool.pokemoncompanion.model.generated.TypesItem;
 
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity
 public class MyPokemon {
 
     private int id;

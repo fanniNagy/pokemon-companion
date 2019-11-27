@@ -2,6 +2,7 @@ package com.codecool.pokemoncompanion.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,34 +23,17 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Integer id;     //legyen Integer?
+    private Integer id;
 
     private String name;
     private String email;
+
     @ElementCollection
-    private List<MyPokemon> myMyPokemons = new ArrayList<>();
+    private List<MyPokemon> myPokemons = new ArrayList<>();
     @ElementCollection
-    private List<MyPokemon> favouriteMyPokemons = new ArrayList<>();
+    private List<MyPokemon> favourites = new ArrayList<>();
     @ElementCollection
     private List<MyPokemon> wishList = new ArrayList<>();
 
-    public void addToList(List list, MyPokemon myPokemon) {
-        list.add(myPokemon);
-    }
 
-    public void removeFroList(List list, MyPokemon myPokemon) {
-        list.remove(myPokemon);
-    }
-
-    public List<MyPokemon> getMyMyPokemons() {
-        return myMyPokemons;
-    }
-
-    public List<MyPokemon> getFavouriteMyPokemons() {
-        return favouriteMyPokemons;
-    }
-
-    public List<MyPokemon> getWishList() {
-        return wishList;
-    }
 }

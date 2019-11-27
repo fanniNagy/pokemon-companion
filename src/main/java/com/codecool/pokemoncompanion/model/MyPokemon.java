@@ -7,17 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 
 @Data
 @NoArgsConstructor
-@Builder
+@Component
 @Entity
 public class MyPokemon {
 
@@ -27,13 +26,15 @@ public class MyPokemon {
 
     private String name;
     @ElementCollection
+    @OneToMany(mappedBy = "myPokemon")
     private List<Type> types;
     @ElementCollection
+    @OneToMany(mappedBy = "myPokemon")
     private List<Ability> abilities;
-    private int height; //decimetres
-    private int weight; //hectograms
+    private int height;         //decimetres
+    private int weight;        //hectograms
 
-    public MyPokemon(int id, String name, List<Type> types, List<Ability> abilities, int height, int weight) {
+    public MyPokemon(Integer id, String name, List<Type> types, List<Ability> abilities, int height, int weight) {
         this.id = id;
         this.name= name;
         this.types = types;

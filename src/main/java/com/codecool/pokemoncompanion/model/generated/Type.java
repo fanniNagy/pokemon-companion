@@ -1,10 +1,9 @@
 package com.codecool.pokemoncompanion.model.generated;
 
+import com.codecool.pokemoncompanion.model.MyPokemon;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Generated("com.robohorse.robopojogenerator")
 @Entity
@@ -14,6 +13,9 @@ public class Type{
 	@Id
 	@GeneratedValue
 	private int id;
+
+	@ManyToOne
+	MyPokemon myPokemon;
 
 	@JsonProperty("name")
 	private String name;

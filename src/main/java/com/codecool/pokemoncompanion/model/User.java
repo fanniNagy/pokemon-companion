@@ -11,28 +11,26 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class User {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer id = 1;
 
-    private String name;
-    private String email;
+    private String name = "Admin";
+    private String email = "admin@cc.com";
 
-    @Singular
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private List<MyPokemon> myPokemons = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "user")
-    @Singular
     private List<MyPokemon> favourites = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "user")
-    @Singular
     private List<MyPokemon> wishList = new ArrayList<>();
 
 

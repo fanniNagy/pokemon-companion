@@ -20,6 +20,7 @@ public class PokeListController {
     @Autowired
     private PokemonCreator pokemonCreator;
 
+
     @Autowired
     private PokeAPIService pokeAPIService;
 
@@ -53,7 +54,9 @@ public class PokeListController {
 
     @GetMapping("/mypokemon/add/{id}")
     public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
-
+        user.getMyPokemons().add(getMyPokemonById(pokemonId));
+        System.out.println(user);
+        userRepository.save(user);
     }
 
     @GetMapping("/favourites/add/{id}")
@@ -83,4 +86,5 @@ public class PokeListController {
         Pokemon pokemon = pokeAPIService.getPokemonByID(id);
         return pokemonCreator.createPokemon(pokemon);
     }
+
 }

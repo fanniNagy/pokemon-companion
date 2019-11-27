@@ -53,7 +53,7 @@ public class PokeListController {
 
     @GetMapping("/mypokemon/add/{id}")
     public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
-        user.getMyPokemons().add(getMyPokemonById(pokemonId));
+
     }
 
     @GetMapping("/favourites/add/{id}")

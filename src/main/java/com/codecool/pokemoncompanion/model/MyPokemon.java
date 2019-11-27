@@ -28,6 +28,10 @@ public class MyPokemon {
     @ElementCollection
     @OneToMany(mappedBy = "myPokemon")
     private List<Type> types;
+
+    @ManyToOne
+    private User user;
+
     @ElementCollection
     @OneToMany(mappedBy = "myPokemon")
     private List<Ability> abilities;

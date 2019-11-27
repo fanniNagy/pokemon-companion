@@ -1,15 +1,9 @@
 package com.codecool.pokemoncompanion.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 public class User {
 
@@ -28,11 +21,18 @@ public class User {
     private String name;
     private String email;
 
-    @ElementCollection
+    @Singular
+    @OneToMany(mappedBy = "user")
     private List<MyPokemon> myPokemons = new ArrayList<>();
-    @ElementCollection
+
+
+    @OneToMany(mappedBy = "user")
+    @Singular
     private List<MyPokemon> favourites = new ArrayList<>();
-    @ElementCollection
+
+
+    @OneToMany(mappedBy = "user")
+    @Singular
     private List<MyPokemon> wishList = new ArrayList<>();
 
 

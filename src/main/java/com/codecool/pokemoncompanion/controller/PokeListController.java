@@ -2,19 +2,15 @@ package com.codecool.pokemoncompanion.controller;
 
 import com.codecool.pokemoncompanion.model.*;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
-import com.codecool.pokemoncompanion.model.generated.ResultsItem;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
 import com.codecool.pokemoncompanion.repository.UserRepository;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
+import com.codecool.pokemoncompanion.service.PokeSaveService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.transform.Result;
 import java.util.List;
 
 @CrossOrigin
@@ -23,38 +19,25 @@ import java.util.List;
 public class PokeListController {
 
     private PokemonCreator pokemonCreator;
-
-
-    @Autowired
     private PokeAPIService pokeAPIService;
-
-
-    @Autowired
-    MyPokemonRepository repository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    private User user;
+    private MyPokemonRepository myPokemonRepository;
+    private UserRepository userRepository;
+    private PokeSaveService pokeSaveService;
 
     @Autowired
-    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, User user) {
+    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, MyPokemonRepository myPokemonRepository, UserRepository userRepository, PokeSaveService pokeSaveService) {
         this.pokemonCreator = pokemonCreator;
         this.pokeAPIService = pokeAPIService;
-        this.user = user;
+        this.myPokemonRepository = myPokemonRepository;
+        this.userRepository = userRepository;
+        this.pokeSaveService = pokeSaveService;
     }
 
     @GetMapping("/")
     public List<ResultItemWithId> pokes() {
-        return pokeAPIService.getPokemons(20, 0);
+        return pokeAPIService.getPokemons(900, 0);
     }
 
-    @GetMapping("/id/{id}")
-    public PokemonEntity pokemonByID(@PathVariable("id") int id) {
-        /*MyPokemon test = getMyPokemonById(id);
-        repository.save(test);                      //db teszt*/
-        return getMyPokemonById(id);
-    }
 
     @GetMapping("/name/{name}")
     public PokemonEntity pokemonByName(@PathVariable("name") String name) {
@@ -66,7 +49,7 @@ public class PokeListController {
     @GetMapping("/mypokemon/add/{id}")
     public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
         User user = userRepository.findFirstByOrderByEmailAsc();
-        user.getMyPokemonsList().add(getMyPokemonById(pokemonId));
+        pokeSaveService.addToMyPokemonList(user,pokemonId);
     }
 
     @GetMapping("/favourites/add/{id}")
@@ -93,11 +76,6 @@ public class PokeListController {
     public List<PokemonEntity> getMyWishList() {
         User user = userRepository.findFirstByOrderByEmailAsc();
         return user.getMyPokemonWishList();
-    }
-
-    private PokemonEntity getMyPokemonById(int id) {
-        Pokemon pokemon = pokeAPIService.getPokemonByID(id);
-        return pokemonCreator.createPokemon(pokemon);
     }
 
 }

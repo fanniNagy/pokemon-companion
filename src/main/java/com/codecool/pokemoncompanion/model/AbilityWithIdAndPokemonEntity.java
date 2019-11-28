@@ -1,14 +1,18 @@
 package com.codecool.pokemoncompanion.model;
 
 import com.codecool.pokemoncompanion.model.generated.Ability;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ability")
 public class AbilityWithIdAndPokemonEntity extends Ability {
 

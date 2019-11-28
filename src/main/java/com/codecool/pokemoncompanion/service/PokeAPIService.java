@@ -3,21 +3,27 @@ package com.codecool.pokemoncompanion.service;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.PokemonList;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
+import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class PokeAPIService {
 
-    public List<ResultsItem> getPokemons(int limit, int pageNumber)  {
+    public List<ResultItemWithId> getPokemons(int limit, int pageNumber)  {
         String apiPath = "https://pokeapi.co/api/v2/pokemon/?offset=" + pageNumber + "&limit=" + limit;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PokemonList> responseEntity = restTemplate.exchange(apiPath, HttpMethod.GET, null, PokemonList.class);
-        return responseEntity.getBody().getResults();
+        return Objects.requireNonNull(responseEntity.getBody()).getResults()
+                .stream()
+                .map(ResultItemWithId::new)
+                .collect(Collectors.toList());
     }
 
 

@@ -4,13 +4,16 @@ import com.codecool.pokemoncompanion.model.MyPokemon;
 import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
+import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 @CrossOrigin
@@ -18,17 +21,19 @@ import java.util.List;
 @RestController
 public class PokeListController {
 
-    @Autowired
     private PokemonCreator pokemonCreator;
-
-    @Autowired
     private PokeAPIService pokeAPIService;
-
-    @Autowired
     private User user;
 
+    @Autowired
+    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, User user) {
+        this.pokemonCreator = pokemonCreator;
+        this.pokeAPIService = pokeAPIService;
+        this.user = user;
+    }
+
     @GetMapping("/")
-    public List<ResultsItem> pokes() {
+    public List<ResultItemWithId> pokes() {
         return pokeAPIService.getPokemons(20, 0);
     }
 
@@ -39,6 +44,7 @@ public class PokeListController {
 
     @GetMapping("/name/{name}")
     public MyPokemon pokemonByName(@PathVariable("name") String name) {
+        name = name.toLowerCase();
         Pokemon pokemon =  pokeAPIService.getPokemonByName(name);
         return pokemonCreator.createPokemon(pokemon);
     }

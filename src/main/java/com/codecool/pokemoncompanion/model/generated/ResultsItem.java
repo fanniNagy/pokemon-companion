@@ -1,6 +1,7 @@
 package com.codecool.pokemoncompanion.model.generated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
@@ -11,6 +12,7 @@ public class ResultsItem{
 
 	@JsonProperty("url")
 	private String url;
+
 
 	public void setName(String name){
 		this.name = name;

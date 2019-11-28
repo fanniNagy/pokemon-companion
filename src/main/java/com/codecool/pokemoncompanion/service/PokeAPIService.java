@@ -11,21 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @EnableCaching
 public class PokeAPIService {
 
-    @Cacheable
+    @Cacheable("allPokemons")
     public List<ResultsItem> getPokemons(int limit, int pageNumber)  {
         String apiPath = "https://pokeapi.co/api/v2/pokemon/?offset=" + pageNumber + "&limit=" + limit;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PokemonList> responseEntity = restTemplate.exchange(apiPath, HttpMethod.GET, null, PokemonList.class);
-        return responseEntity.getBody().getResults();
+        return Objects.requireNonNull(responseEntity.getBody()).getResults();
     }
 
 
-    @Cacheable
+    @Cacheable("getPokemonByID")
     public Pokemon getPokemonByID(int id)  {
         String apiPath = "https://pokeapi.co/api/v2/pokemon/" + id;
         RestTemplate restTemplate = new RestTemplate();
@@ -33,7 +34,7 @@ public class PokeAPIService {
         return responseEntity.getBody();
     }
 
-    @Cacheable
+    @Cacheable("getPokemonByName")
     public Pokemon getPokemonByName(String name){
         String apiPath = "https://pokeapi.co/api/v2/pokemon/" + name;
         RestTemplate restTemplate = new RestTemplate();

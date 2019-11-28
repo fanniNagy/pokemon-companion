@@ -1,6 +1,8 @@
 package com.codecool.pokemoncompanion.service;
 
+import com.codecool.pokemoncompanion.model.AbilityWithIdAndPokemonEntity;
 import com.codecool.pokemoncompanion.model.PokemonEntity;
+import com.codecool.pokemoncompanion.model.TypeWithIdAndPokemonEntity;
 import com.codecool.pokemoncompanion.model.generated.AbilitiesItem;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.TypesItem;
@@ -15,8 +17,16 @@ public class PokemonCreator {
         return new PokemonEntity(
                 (long) pokemon.getId(),
                 pokemon.getName(),
-                pokemon.getTypes().stream().map(TypesItem::getType).collect(Collectors.toList()),
-                pokemon.getAbilities().stream().map(AbilitiesItem::getAbility).collect(Collectors.toList()),
+                pokemon.getTypes()
+                        .stream()
+                        .map(TypesItem::getType)
+                        .map(TypeWithIdAndPokemonEntity::new)
+                        .collect(Collectors.toList()),
+                pokemon.getAbilities()
+                        .stream()
+                        .map(AbilitiesItem::getAbility)
+                        .map(AbilityWithIdAndPokemonEntity::new)
+                        .collect(Collectors.toList()),
                 pokemon.getHeight(),
                 pokemon.getWeight());
     }

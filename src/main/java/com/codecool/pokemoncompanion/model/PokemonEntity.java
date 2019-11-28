@@ -27,7 +27,7 @@ public class PokemonEntity {
     private String name;
 
     @OneToMany(mappedBy = "pokemonEntity")
-    private List<Type> types;
+    private List<TypeWithIdAndPokemonEntity> types;
 
     @ManyToMany
     private List<User> userPokemons;
@@ -37,12 +37,13 @@ public class PokemonEntity {
     private List<User> userFavPokemons;
 
     @OneToMany(mappedBy = "pokemonEntity")
-    private List<Ability> abilities;
+    private List<AbilityWithIdAndPokemonEntity> abilities;
 
     private int height;         //decimetres
     private int weight;        //hectograms
 
-    public PokemonEntity(Long id, String name, List<Type> types, List<Ability> abilities, int height, int weight) {
+    public PokemonEntity(Long id, String name, List<TypeWithIdAndPokemonEntity> types,
+                         List<AbilityWithIdAndPokemonEntity> abilities, int height, int weight) {
         this.id = id;
         this.name = name;
         this.types = types;

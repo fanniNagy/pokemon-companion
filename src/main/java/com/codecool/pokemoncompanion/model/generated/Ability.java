@@ -12,15 +12,7 @@ import javax.persistence.ManyToOne;
 
 @Data
 @Generated("com.robohorse.robopojogenerator")
-@Entity
 public class Ability{
-
-	@Id
-	@GeneratedValue
-	private int id;
-
-	@ManyToOne
-    PokemonEntity pokemonEntity;
 
 	@JsonProperty("name")
 	private String name;

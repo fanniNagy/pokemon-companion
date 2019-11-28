@@ -9,15 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Generated("com.robohorse.robopojogenerator")
-@Entity
 public class Type{
-
-	@Id
-	@GeneratedValue
-	private int id;
-
-	@ManyToOne
-    PokemonEntity pokemonEntity;
 
 	@JsonProperty("name")
 	private String name;

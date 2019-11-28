@@ -21,7 +21,6 @@ import java.util.List;
 public class PokemonEntity {
 
     @Id
-    @GeneratedValue
     private Long id;
 
     private String name;

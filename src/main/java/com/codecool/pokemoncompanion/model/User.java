@@ -24,13 +24,13 @@ public class User {
     private String email;
 
 
-    @ManyToMany(mappedBy = "userPokemons", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "userPokemons")
     private List<PokemonEntity> myPokemonsList;
 
-    @ManyToMany(mappedBy = "userFavPokemons", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "userFavPokemons")
     private List<PokemonEntity> favouritePokemonsList;
 
-    @ManyToMany(mappedBy = "userWishListPokemons", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "userWishListPokemons")
     private List<PokemonEntity> myPokemonWishList;
 
 }

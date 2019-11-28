@@ -1,57 +1,48 @@
 package com.codecool.pokemoncompanion;
 
 
-import com.codecool.pokemoncompanion.model.MyPokemon;
-import com.codecool.pokemoncompanion.model.User;
-import com.codecool.pokemoncompanion.model.generated.Pokemon;
-import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
+import com.codecool.pokemoncompanion.model.*;
 import com.codecool.pokemoncompanion.repository.UserRepository;
-import com.codecool.pokemoncompanion.service.PokeAPIService;
-import com.codecool.pokemoncompanion.service.PokemonCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 @SpringBootApplication
 public class PokemonCompanionApplication {
 
-    @Autowired
-    PokeAPIService pokeAPIService;
+    private UserRepository userRepository;
 
-    @Autowired
-    MyPokemonRepository pokemonRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PokemonCreator creator;
 
     public static void main(String[] args) {
         SpringApplication.run(PokemonCompanionApplication.class, args);
     }
+
+    @Bean
     public CommandLineRunner init() {
         return args -> {
-            List<MyPokemon> myPokemons = new ArrayList<>();
-            List<MyPokemon> fav = new ArrayList<>();
-            List<MyPokemon> wish = new ArrayList<>();
-            if (userRepository.findAll().equals(0)){
-                User.builder()
+            if (userRepository.findAll().size() == 0) {
+                User admin = User.builder()
                         .email("admin@cc.com")
-                        .id(1)
+                        .id(1L)
                         .name("Admin")
-                        .myPokemons(myPokemons)
-                        .favourites(fav)
-                        .wishList(wish)
+                        .myPokemonsList(new ArrayList<>())
+                        .favouritePokemonsList(new ArrayList<>())
+                        .myPokemonWishList(new ArrayList<>())
                         .build();
+                userRepository.save(admin);
             }
 
         };
+    }
+
+    @Autowired
+    public PokemonCompanionApplication(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 

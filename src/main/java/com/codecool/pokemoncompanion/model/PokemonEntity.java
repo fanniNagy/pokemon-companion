@@ -18,29 +18,33 @@ import java.util.List;
 @NoArgsConstructor
 @Component
 @Entity
-public class MyPokemon {
+public class PokemonEntity {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String name;
-    @ElementCollection
-    @OneToMany(mappedBy = "myPokemon")
+
+    @OneToMany(mappedBy = "pokemonEntity")
     private List<Type> types;
 
-    @ManyToOne
-    private User user;
+    @ManyToMany
+    private List<User> userPokemons;
+    @ManyToMany
+    private List<User> userWishListPokemons;
+    @ManyToMany
+    private List<User> userFavPokemons;
 
-    @ElementCollection
-    @OneToMany(mappedBy = "myPokemon")
+    @OneToMany(mappedBy = "pokemonEntity")
     private List<Ability> abilities;
+
     private int height;         //decimetres
     private int weight;        //hectograms
 
-    public MyPokemon(Integer id, String name, List<Type> types, List<Ability> abilities, int height, int weight) {
+    public PokemonEntity(Long id, String name, List<Type> types, List<Ability> abilities, int height, int weight) {
         this.id = id;
-        this.name= name;
+        this.name = name;
         this.types = types;
         this.abilities = abilities;
         this.height = height;

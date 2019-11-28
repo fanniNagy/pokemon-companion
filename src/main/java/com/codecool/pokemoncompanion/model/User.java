@@ -7,31 +7,30 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue
-    private Integer id = 1;
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
 
-    private String name = "Admin";
-    private String email = "admin@cc.com";
-
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
-    private List<MyPokemon> myPokemons = new ArrayList<>();
+    private String name;
+    private String email;
 
 
-    @OneToMany(mappedBy = "user")
-    private List<MyPokemon> favourites = new ArrayList<>();
+    @ManyToMany(mappedBy = "userPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> myPokemonsList;
 
+    @ManyToMany(mappedBy = "userFavPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> favouritePokemonsList;
 
-    @OneToMany(mappedBy = "user")
-    private List<MyPokemon> wishList = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "userWishListPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> myPokemonWishList;
 
 }

@@ -23,6 +23,8 @@ public class AbilityWithIdAndPokemonEntity extends Ability {
     @ManyToOne
     PokemonEntity pokemonEntity;
 
+    private String name;
+
     public AbilityWithIdAndPokemonEntity(Ability ability){
         this.setName(ability.getName());
         this.setUrl(ability.getUrl());

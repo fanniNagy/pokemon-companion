@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class PokemonEntity {
     private List<TypeWithIdAndPokemonEntity> types;
 
     @ManyToMany
-    private List<User> userPokemons;
+    private List<User> userPokemons = new ArrayList<>();
     @ManyToMany
     private List<User> userWishListPokemons;
     @ManyToMany

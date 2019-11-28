@@ -13,7 +13,6 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "type")
 public class TypeWithIdAndPokemonEntity extends Type {
 
     @Id
@@ -22,6 +21,8 @@ public class TypeWithIdAndPokemonEntity extends Type {
 
     @ManyToOne
     PokemonEntity pokemonEntity;
+
+    private String name;
 
     public TypeWithIdAndPokemonEntity(Type type){
         this.setName(type.getName());

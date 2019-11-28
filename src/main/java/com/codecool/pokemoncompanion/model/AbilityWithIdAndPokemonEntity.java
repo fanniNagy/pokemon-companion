@@ -13,7 +13,6 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ability")
 public class AbilityWithIdAndPokemonEntity extends Ability {
 
     @Id

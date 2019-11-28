@@ -12,12 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
     private String name;

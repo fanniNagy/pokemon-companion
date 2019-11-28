@@ -1,16 +1,17 @@
 package com.codecool.pokemoncompanion.controller;
 
-import com.codecool.pokemoncompanion.model.MyPokemon;
-import com.codecool.pokemoncompanion.model.User;
+import com.codecool.pokemoncompanion.model.*;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.generated.ResultsItem;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
+import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
+import com.codecool.pokemoncompanion.repository.UserRepository;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.transform.Result;
@@ -22,7 +23,18 @@ import java.util.List;
 public class PokeListController {
 
     private PokemonCreator pokemonCreator;
+
+
+    @Autowired
     private PokeAPIService pokeAPIService;
+
+
+    @Autowired
+    MyPokemonRepository repository;
+
+    @Autowired
+    UserRepository userRepository;
+
     private User user;
 
     @Autowired
@@ -38,49 +50,54 @@ public class PokeListController {
     }
 
     @GetMapping("/id/{id}")
-    public MyPokemon pokemonByID(@PathVariable("id") int id) {
+    public PokemonEntity pokemonByID(@PathVariable("id") int id) {
+        /*MyPokemon test = getMyPokemonById(id);
+        repository.save(test);                      //db teszt*/
         return getMyPokemonById(id);
     }
 
     @GetMapping("/name/{name}")
-    public MyPokemon pokemonByName(@PathVariable("name") String name) {
+    public PokemonEntity pokemonByName(@PathVariable("name") String name) {
         name = name.toLowerCase();
-        Pokemon pokemon =  pokeAPIService.getPokemonByName(name);
+        Pokemon pokemon = pokeAPIService.getPokemonByName(name);
         return pokemonCreator.createPokemon(pokemon);
     }
 
-    @PostMapping("/mypokemon/add/{id}")
-    public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId){
-        user.addToList(user.getMyMyPokemons(), getMyPokemonById(pokemonId));
+    @GetMapping("/mypokemon/add/{id}")
+    public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        user.getMyPokemonsList().add(getMyPokemonById(pokemonId));
     }
 
-    @PostMapping("/favourites/add/{id}")
-    public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId){
-        user.addToList(user.getFavouriteMyPokemons(), getMyPokemonById(pokemonId));
+    @GetMapping("/favourites/add/{id}")
+    public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId) {
     }
 
     @PostMapping("/wishlist/add/{id}")
-    public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId){
-        user.addToList(user.getWishList(), getMyPokemonById(pokemonId));
+    public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId) {
     }
 
     @GetMapping("/mypokemon/")
-    public List<MyPokemon> getMyMyPokemons(){
-        return user.getMyMyPokemons();
+    public List<PokemonEntity> getMyMyPokemons() {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        return user.getMyPokemonsList();
     }
 
     @GetMapping("/favourites/")
-    public List<MyPokemon> getMyFavourites(){
-        return user.getFavouriteMyPokemons();
+    public List<PokemonEntity> getMyFavourites() {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        return user.getFavouritePokemonsList();
     }
 
     @GetMapping("/wishlist/")
-    public List<MyPokemon> getMyWishList(){
-        return user.getWishList();
+    public List<PokemonEntity> getMyWishList() {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        return user.getMyPokemonWishList();
     }
 
-    private MyPokemon getMyPokemonById(int id){
-        Pokemon pokemon =  pokeAPIService.getPokemonByID(id);
+    private PokemonEntity getMyPokemonById(int id) {
+        Pokemon pokemon = pokeAPIService.getPokemonByID(id);
         return pokemonCreator.createPokemon(pokemon);
     }
+
 }

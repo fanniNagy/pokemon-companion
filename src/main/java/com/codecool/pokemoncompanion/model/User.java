@@ -1,36 +1,36 @@
 package com.codecool.pokemoncompanion.model;
 
+import lombok.*;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "user")
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
+
     private String name;
     private String email;
-    private List<MyPokemon> myMyPokemons = new ArrayList<>();
-    private List<MyPokemon> favouriteMyPokemons = new ArrayList<>();
-    private List<MyPokemon> wishList = new ArrayList<>();
 
-    public void addToList(List list, MyPokemon myPokemon) {
-        list.add(myPokemon);
-    }
 
-    public void removeFroList(List list, MyPokemon myPokemon) {
-        list.remove(myPokemon);
-    }
+    @ManyToMany(mappedBy = "userPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> myPokemonsList;
 
-    public List<MyPokemon> getMyMyPokemons() {
-        return myMyPokemons;
-    }
+    @ManyToMany(mappedBy = "userFavPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> favouritePokemonsList;
 
-    public List<MyPokemon> getFavouriteMyPokemons() {
-        return favouriteMyPokemons;
-    }
+    @ManyToMany(mappedBy = "userWishListPokemons", cascade = CascadeType.ALL)
+    private List<PokemonEntity> myPokemonWishList;
 
-    public List<MyPokemon> getWishList() {
-        return wishList;
-    }
 }

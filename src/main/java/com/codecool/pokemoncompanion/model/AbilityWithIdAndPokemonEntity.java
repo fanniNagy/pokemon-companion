@@ -21,7 +21,7 @@ public class AbilityWithIdAndPokemonEntity extends Ability {
     @Id
     private long id;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "abilities")
     Set<PokemonEntity> pokemonEntity = new HashSet<>();
 
     private String name;

@@ -21,7 +21,7 @@ public class TypeWithIdAndPokemonEntity extends Type {
     @Id
     private long id;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "types")
     Set<PokemonEntity> pokemonEntity = new HashSet<>();
 
     private String name;

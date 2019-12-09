@@ -21,7 +21,7 @@ public class PokemonEntity {
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<TypeWithIdAndPokemonEntity> types = new HashSet<>();
 
     @ManyToMany
@@ -32,7 +32,7 @@ public class PokemonEntity {
     private Set<User> userFavPokemons = new HashSet<>();
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<AbilityWithIdAndPokemonEntity> abilities = new HashSet<>();
 
     private int height;         //decimetres

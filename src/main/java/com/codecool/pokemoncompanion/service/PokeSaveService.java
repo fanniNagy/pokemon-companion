@@ -1,18 +1,13 @@
 package com.codecool.pokemoncompanion.service;
 
-import com.codecool.pokemoncompanion.model.AbilityWithIdAndPokemonEntity;
 import com.codecool.pokemoncompanion.model.PokemonEntity;
 import com.codecool.pokemoncompanion.model.User;
-import com.codecool.pokemoncompanion.model.generated.Ability;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
-import com.codecool.pokemoncompanion.repository.AbilityRepository;
+import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
 import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
-import com.codecool.pokemoncompanion.repository.TypeRepository;
+import com.codecool.pokemoncompanion.repository.MyWishlistRepostitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PokeSaveService {
@@ -21,23 +16,39 @@ public class PokeSaveService {
     private MyPokemonRepository myPokemonRepository;
 
     @Autowired
+    private MyFavouriteRepository favourites;
+
+    @Autowired
+    private MyWishlistRepostitory wishlist;
+
+    @Autowired
     private PokemonCreator pokemonCreator;
 
     @Autowired
-    PokeAPIService pokeAPIService;
+    private PokeAPIService pokeAPIService;
 
-    @Autowired
-    TypeRepository typeRepository;
-
-    @Autowired
-    AbilityRepository abilityRepository;
 
     public void addToMyPokemonList(User user, int pokemonId) {
+        PokemonEntity pokemon = createPokemonForOrm(user, pokemonId);
+        myPokemonRepository.save(pokemon);
+    }
+
+    public void addToMyWishList(User user, int pokemonId) {
+        PokemonEntity pokemon = createPokemonForOrm(user, pokemonId);
+        wishlist.save(pokemon);
+    }
+
+    public void addToMyFavouriteList(User user, int pokemonId) {
+        PokemonEntity pokemon = createPokemonForOrm(user, pokemonId);
+        favourites.save(pokemon);
+    }
+
+    private PokemonEntity createPokemonForOrm(User user, int pokemonId) {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);
         pokemon.getAbilities().forEach(ability -> ability.getPokemonEntity().add(pokemon));
         pokemon.getTypes().forEach(type -> type.getPokemonEntity().add(pokemon));
         pokemon.getUserPokemons().add(user);
-        myPokemonRepository.save(pokemon);
+        return pokemon;
     }
 
     private PokemonEntity getMyPokemonById(int id) {

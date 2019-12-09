@@ -3,7 +3,9 @@ package com.codecool.pokemoncompanion.controller;
 import com.codecool.pokemoncompanion.model.*;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
+import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
 import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
+import com.codecool.pokemoncompanion.repository.MyWishlistRepostitory;
 import com.codecool.pokemoncompanion.repository.UserRepository;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokeSaveService;
@@ -21,14 +23,18 @@ public class PokeListController {
     private PokemonCreator pokemonCreator;
     private PokeAPIService pokeAPIService;
     private MyPokemonRepository myPokemonRepository;
+    private MyWishlistRepostitory wishlist;
+    private MyFavouriteRepository favourites;
     private UserRepository userRepository;
     private PokeSaveService pokeSaveService;
 
     @Autowired
-    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, MyPokemonRepository myPokemonRepository, UserRepository userRepository, PokeSaveService pokeSaveService) {
+    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, MyPokemonRepository myPokemonRepository, MyWishlistRepostitory wishlist, MyFavouriteRepository favourites, UserRepository userRepository, PokeSaveService pokeSaveService) {
         this.pokemonCreator = pokemonCreator;
         this.pokeAPIService = pokeAPIService;
         this.myPokemonRepository = myPokemonRepository;
+        this.wishlist = wishlist;
+        this.favourites = favourites;
         this.userRepository = userRepository;
         this.pokeSaveService = pokeSaveService;
     }
@@ -54,28 +60,29 @@ public class PokeListController {
 
     @PutMapping("/favourites/add/{id}")
     public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId) {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        pokeSaveService.addToMyFavouriteList(user, pokemonId);
     }
 
     @PostMapping("/wishlist/add/{id}")
     public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId) {
+        User user = userRepository.findFirstByOrderByEmailAsc();
+        pokeSaveService.addToMyWishList(user, pokemonId);
     }
 
     @GetMapping("/mypokemon/")
     public List<PokemonEntity> getMyMyPokemons() {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        return user.getMyPokemonsList();
+        return null;
     }
 
     @GetMapping("/favourites/")
     public List<PokemonEntity> getMyFavourites() {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        return user.getFavouritePokemonsList();
+        return null;
     }
 
     @GetMapping("/wishlist/")
     public List<PokemonEntity> getMyWishList() {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        return user.getMyPokemonWishList();
+        return null;
     }
 
 }

@@ -1,18 +1,13 @@
 package com.codecool.pokemoncompanion.model;
 
-import com.codecool.pokemoncompanion.model.generated.Ability;
-import com.codecool.pokemoncompanion.model.generated.Type;
-import com.codecool.pokemoncompanion.model.generated.TypesItem;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 
 @Data
@@ -26,24 +21,40 @@ public class PokemonEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "pokemonEntity")
-    private List<TypeWithIdAndPokemonEntity> types;
+    @ManyToMany
+    private Set<TypeWithIdAndPokemonEntity> types = new HashSet<>();
 
     @ManyToMany
-    private List<User> userPokemons = new ArrayList<>();
+    private Set<User> userPokemons = new HashSet<>();
     @ManyToMany
-    private List<User> userWishListPokemons;
+    private Set<User> userWishListPokemons = new HashSet<>();
     @ManyToMany
-    private List<User> userFavPokemons;
+    private Set<User> userFavPokemons = new HashSet<>();
 
-    @OneToMany(mappedBy = "pokemonEntity")
-    private List<AbilityWithIdAndPokemonEntity> abilities;
+
+    @ManyToMany
+    private Set<AbilityWithIdAndPokemonEntity> abilities = new HashSet<>();
 
     private int height;         //decimetres
     private int weight;        //hectograms
 
-    public PokemonEntity(Long id, String name, List<TypeWithIdAndPokemonEntity> types,
-                         List<AbilityWithIdAndPokemonEntity> abilities, int height, int weight) {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PokemonEntity that = (PokemonEntity) o;
+        return id.equals(that.id) &&
+                name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    public PokemonEntity(Long id, String name, Set<TypeWithIdAndPokemonEntity> types,
+                         Set<AbilityWithIdAndPokemonEntity> abilities, int height, int weight) {
         this.id = id;
         this.name = name;
         this.types = types;

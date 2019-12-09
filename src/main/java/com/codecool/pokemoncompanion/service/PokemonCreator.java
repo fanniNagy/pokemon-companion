@@ -21,12 +21,12 @@ public class PokemonCreator {
                         .stream()
                         .map(TypesItem::getType)
                         .map(TypeWithIdAndPokemonEntity::new)
-                        .collect(Collectors.toList()),
+                        .collect(Collectors.toSet()),
                 pokemon.getAbilities()
                         .stream()
                         .map(AbilitiesItem::getAbility)
                         .map(AbilityWithIdAndPokemonEntity::new)
-                        .collect(Collectors.toList()),
+                        .collect(Collectors.toSet()),
                 pokemon.getHeight(),
                 pokemon.getWeight());
     }

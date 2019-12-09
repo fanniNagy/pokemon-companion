@@ -34,19 +34,10 @@ public class PokeSaveService {
 
     public void addToMyPokemonList(User user, int pokemonId) {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);
+        pokemon.getAbilities().forEach(ability -> ability.getPokemonEntity().add(pokemon));
+        pokemon.getTypes().forEach(type -> type.getPokemonEntity().add(pokemon));
         pokemon.getUserPokemons().add(user);
         myPokemonRepository.save(pokemon);
-
-        List<AbilityWithIdAndPokemonEntity> abilities = new ArrayList<>();
-        pokemon.getAbilities().forEach(ability -> {
-            abilities.add(new AbilityWithIdAndPokemonEntity(ability));
-        });
-        pokemon.setAbilities(abilities);
-        pokemon.getAbilities().forEach(ability -> abilityRepository.save(ability));
-
-        pokemon.getTypes().forEach(type -> {
-            typeRepository.save(type);
-        });
     }
 
     private PokemonEntity getMyPokemonById(int id) {

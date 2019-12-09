@@ -46,13 +46,13 @@ public class PokeListController {
         return pokemonCreator.createPokemon(pokemon);
     }
 
-    @GetMapping("/mypokemon/add/{id}")
+    @PutMapping("/mypokemon/add/{id}")
     public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
         User user = userRepository.findFirstByOrderByEmailAsc();
         pokeSaveService.addToMyPokemonList(user,pokemonId);
     }
 
-    @GetMapping("/favourites/add/{id}")
+    @PutMapping("/favourites/add/{id}")
     public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId) {
     }
 

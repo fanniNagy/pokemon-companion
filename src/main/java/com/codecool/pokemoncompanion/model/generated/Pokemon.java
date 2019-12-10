@@ -2,7 +2,15 @@ package com.codecool.pokemoncompanion.model.generated;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Generated("com.robohorse.robopojogenerator")
 public class Pokemon{

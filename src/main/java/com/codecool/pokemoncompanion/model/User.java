@@ -1,36 +1,47 @@
 package com.codecool.pokemoncompanion.model;
 
+import lombok.*;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Component
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private String email;
-    private List<MyPokemon> myMyPokemons = new ArrayList<>();
-    private List<MyPokemon> favouriteMyPokemons = new ArrayList<>();
-    private List<MyPokemon> wishList = new ArrayList<>();
 
-    public void addToList(List list, MyPokemon myPokemon) {
-        list.add(myPokemon);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
     }
 
-    public void removeFroList(List list, MyPokemon myPokemon) {
-        list.remove(myPokemon);
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
-    public List<MyPokemon> getMyMyPokemons() {
-        return myMyPokemons;
-    }
+    @ManyToMany(mappedBy = "userPokemons")
+    private List<PokemonEntity> myPokemonsList;
 
-    public List<MyPokemon> getFavouriteMyPokemons() {
-        return favouriteMyPokemons;
-    }
+    @ManyToMany(mappedBy = "userFavPokemons")
+    private List<PokemonEntity> favouritePokemonsList;
 
-    public List<MyPokemon> getWishList() {
-        return wishList;
-    }
+    @ManyToMany(mappedBy = "userWishListPokemons")
+    private List<PokemonEntity> myPokemonWishList;
+
 }

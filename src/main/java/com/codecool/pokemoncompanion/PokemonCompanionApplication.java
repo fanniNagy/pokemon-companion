@@ -1,13 +1,14 @@
 package com.codecool.pokemoncompanion;
 
 
-import com.codecool.pokemoncompanion.model.*;
+import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,8 @@ public class PokemonCompanionApplication {
                 User admin = User.builder()
                         .email("admin@cc.com")
                         .id(1L)
-                        .name("Admin")
+                        .name("admin")
+                        .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("admin"))
                         .myPokemonsList(new ArrayList<>())
                         .favouritePokemonsList(new ArrayList<>())
                         .myPokemonWishList(new ArrayList<>())

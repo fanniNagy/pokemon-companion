@@ -11,6 +11,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -31,5 +32,6 @@ public class BlacklistFilter extends GenericFilterBean {
         if (!user.isBanned()) {
             chain.doFilter(request, response);
         }
+        ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, "You have been Banned");
     }
 }

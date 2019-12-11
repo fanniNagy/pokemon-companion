@@ -54,4 +54,7 @@ public class User {
     @ManyToMany(mappedBy = "userWishListPokemons")
     private List<PokemonEntity> myPokemonWishList;
 
+    @ManyToMany(mappedBy = "userManagedPokemons")
+    private List<ManagedPokemon> managedPokemons;
+
 }

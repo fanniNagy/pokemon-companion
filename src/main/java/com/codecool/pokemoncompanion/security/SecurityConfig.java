@@ -1,5 +1,6 @@
 package com.codecool.pokemoncompanion.security;
 
+import com.codecool.pokemoncompanion.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -34,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //TODO
                 .anyRequest().denyAll()
                 .and()
-                .addFilterBefore(new JwtFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new BlacklistFilter(userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

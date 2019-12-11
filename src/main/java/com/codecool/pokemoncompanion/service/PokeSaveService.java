@@ -1,8 +1,10 @@
 package com.codecool.pokemoncompanion.service;
 
+import com.codecool.pokemoncompanion.model.ManagedPokemon;
 import com.codecool.pokemoncompanion.model.PokemonEntity;
 import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
+import com.codecool.pokemoncompanion.repository.ManagedPokemonRepositroy;
 import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
 import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
 import com.codecool.pokemoncompanion.repository.MyWishlistRepostitory;
@@ -16,6 +18,9 @@ public class PokeSaveService {
     private MyPokemonRepository myPokemonRepository;
 
     @Autowired
+    ManagedPokemonCreator managedPokemonCreator;
+
+    @Autowired
     private MyFavouriteRepository favourites;
 
     @Autowired
@@ -23,6 +28,8 @@ public class PokeSaveService {
 
     @Autowired
     private PokemonCreator pokemonCreator;
+    @Autowired
+    private ManagedPokemonRepositroy managedPokemonRepositroy;
 
     @Autowired
     private PokeAPIService pokeAPIService;
@@ -42,6 +49,12 @@ public class PokeSaveService {
         PokemonEntity pokemon = createPokemonForOrm(user, pokemonId);
         favourites.save(pokemon);
     }
+
+    public void addToManager(Integer cp, Integer quality) {
+        ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality);
+        managedPokemonRepositroy.save(managedPokemon);
+    }
+
 
     private PokemonEntity createPokemonForOrm(User user, int pokemonId) {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);

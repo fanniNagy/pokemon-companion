@@ -31,6 +31,7 @@ public class BlacklistFilter extends GenericFilterBean {
         User user = userRepository.findByName(username);
         if (!user.isBanned()) {
             chain.doFilter(request, response);
+            return;
         }
         ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, "You have been Banned");
     }

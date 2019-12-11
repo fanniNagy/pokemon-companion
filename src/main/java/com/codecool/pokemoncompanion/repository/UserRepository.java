@@ -2,7 +2,9 @@ package com.codecool.pokemoncompanion.repository;
 
 import com.codecool.pokemoncompanion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository <User, Long> {
 
@@ -10,6 +12,8 @@ public interface UserRepository extends JpaRepository <User, Long> {
 
     User findByName(String name);
 
-    @Query("UPDATE User SET banned = true WHERE User.id = ?1")
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.banned = true WHERE u.id = ?1")
     void banUserByUserId(Long id);
 }

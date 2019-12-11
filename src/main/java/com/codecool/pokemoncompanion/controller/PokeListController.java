@@ -1,6 +1,8 @@
 package com.codecool.pokemoncompanion.controller;
 
-import com.codecool.pokemoncompanion.model.*;
+import com.codecool.pokemoncompanion.model.ManagedPokemon;
+import com.codecool.pokemoncompanion.model.PokemonEntity;
+import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
@@ -82,6 +84,11 @@ public class PokeListController {
 
     @GetMapping("/wishlist/")
     public List<PokemonEntity> getMyWishList() {
+        return null;
+    }
+
+    @GetMapping("/manager")
+    public List<ManagedPokemon> getManagedPokemons() {
         return null;
     }
 

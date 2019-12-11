@@ -12,6 +12,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,7 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody UserCredentials data) {
+    public ResponseEntity signin(@RequestBody UserCredentials data, HttpServletResponse res) {
         try {
             String username = data.getUsername();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
@@ -45,6 +47,14 @@ public class AuthController {
             model.put("username", username);
             model.put("roles", roles);
             model.put("token", token);
+
+            Cookie cookie = new Cookie("Authorization", token);
+            cookie.setMaxAge(60 * 60 * 10);
+            cookie.setPath("/pokemon/");
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            res.addCookie(cookie);
+
             return ResponseEntity.ok(model);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");

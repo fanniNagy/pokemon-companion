@@ -19,10 +19,11 @@ import java.util.*;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
     private String email;
 
@@ -31,13 +32,26 @@ public class User {
     public Set<User> friends = new HashSet<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+    private boolean banned;
+
+    @ManyToMany(mappedBy = "userPokemons")
+    private List<PokemonEntity> myPokemonsList;
+
+    @ManyToMany(mappedBy = "userFavPokemons")
+    private List<PokemonEntity> favouritePokemonsList;
+
+    @ManyToMany(mappedBy = "userWishListPokemons")
+    private List<PokemonEntity> myPokemonWishList;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id);
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(email, user.email);
     }
 
     @JsonBackReference
@@ -59,16 +73,18 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, email);
     }
 
-    @ManyToMany(mappedBy = "userPokemons")
-    private List<PokemonEntity> myPokemonsList;
-
-    @ManyToMany(mappedBy = "userFavPokemons")
-    private List<PokemonEntity> favouritePokemonsList;
-
-    @ManyToMany(mappedBy = "userWishListPokemons")
-    private List<PokemonEntity> myPokemonWishList;
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", banned=" + banned +
+                '}';
+    }
 }

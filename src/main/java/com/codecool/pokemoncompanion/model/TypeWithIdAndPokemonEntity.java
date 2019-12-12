@@ -2,12 +2,14 @@ package com.codecool.pokemoncompanion.model;
 
 import com.codecool.pokemoncompanion.model.generated.Type;
 import com.codecool.pokemoncompanion.util.Util;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,6 +23,7 @@ public class TypeWithIdAndPokemonEntity extends Type {
     @Id
     private long id;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "types")
     Set<PokemonEntity> pokemonEntity = new HashSet<>();
 

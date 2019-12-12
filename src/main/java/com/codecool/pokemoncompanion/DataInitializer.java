@@ -31,6 +31,7 @@ public class DataInitializer implements CommandLineRunner {
                 .myPokemonsList(new ArrayList<>())
                 .favouritePokemonsList(new ArrayList<>())
                 .myPokemonWishList(new ArrayList<>())
+                .banned(false)
                 .build();
         userRepository.save(user);
         User user2 = User.builder()
@@ -54,6 +55,19 @@ public class DataInitializer implements CommandLineRunner {
                 .build();
         userRepository.save(user3);
 
+        for (int i = 0; i < 20; i++) {
+            userRepository.save(User.builder()
+                    .email("manyuser" + i + "@cc.com")
+                    .name("user" + i)
+                    .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("user"))
+                    .roles(Collections.singletonList("ROLE_USER"))
+                    .myPokemonsList(new ArrayList<>())
+                    .favouritePokemonsList(new ArrayList<>())
+                    .myPokemonWishList(new ArrayList<>())
+                    .banned(false)
+                    .build());
+        }
+
         User admin = User.builder()
                 .email("admin@cc.com")
                 .name("admin")
@@ -62,6 +76,7 @@ public class DataInitializer implements CommandLineRunner {
                 .myPokemonsList(new ArrayList<>())
                 .favouritePokemonsList(new ArrayList<>())
                 .myPokemonWishList(new ArrayList<>())
+                .banned(false)
                 .build();
         admin.setFriends(Stream.of(user, user2).collect(Collectors.toSet()));
         admin.setFriendRequests(Stream.of(user3).collect(Collectors.toSet()));

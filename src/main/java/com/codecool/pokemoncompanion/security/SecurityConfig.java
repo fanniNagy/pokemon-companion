@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
-                .antMatchers(HttpMethod.GET, "/pokemon/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/pokemon/").permitAll()
                 .antMatchers(HttpMethod.GET, "/pokemon/name/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/mypokemon/add/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "pokemon/mypokemon/add/**").hasRole("ADMIN")
                 //TODO
                 .anyRequest().denyAll()
                 .and()

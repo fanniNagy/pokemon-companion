@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "pokemon/mypokemon/add/**").hasRole("ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/pokemon/ivcalculator").authenticated()
+                .antMatchers(HttpMethod.GET, "/pokemon/manager").authenticated()
                 //TODO
                 .anyRequest().denyAll()
                 .and()

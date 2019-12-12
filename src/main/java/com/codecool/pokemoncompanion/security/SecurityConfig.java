@@ -31,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
                 .antMatchers(HttpMethod.GET, "/pokemon/").permitAll()
-                .antMatchers(HttpMethod.GET, "/pokemon/name/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "pokemon/mypokemon/add/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "pokemon/mypokemon/add/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/pokemon/ivcalculator").authenticated()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
+                .antMatchers("/pokemon/**").authenticated()
                 //TODO
                 .anyRequest().denyAll()
                 .and()

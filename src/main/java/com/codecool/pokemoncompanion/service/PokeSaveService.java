@@ -50,6 +50,9 @@ public class PokeSaveService {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);
         pokemon.getAbilities().forEach(ability -> ability.getPokemonEntity().add(pokemon));
         pokemon.getTypes().forEach(type -> type.getPokemonEntity().add(pokemon));
+        pokemon.getUserWishListPokemons().forEach(user -> user.getMyPokemonWishList().add(pokemon));
+        pokemon.getUserFavPokemons().forEach(user -> user.getFavouritePokemonsList().add(pokemon));
+        pokemon.getUserPokemons().forEach(user -> user.getMyPokemonsList().add(pokemon));
         return pokemon;
     }
 

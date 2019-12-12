@@ -93,9 +93,4 @@ public class PokeListController {
         return null;
     }
 
-    @GetMapping("/manager")
-    public List<ManagedPokemon> getManagedPokemons() {
-        return null;
-    }
-
 }

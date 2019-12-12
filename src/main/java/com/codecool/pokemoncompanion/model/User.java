@@ -19,16 +19,18 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
     private String email;
     @NotNull
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+    private boolean banned;
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,6 @@
 package com.codecool.pokemoncompanion.repository;
 
+import com.codecool.pokemoncompanion.model.PokemonEntity;
 import com.codecool.pokemoncompanion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,4 +23,14 @@ public interface UserRepository extends JpaRepository <User, Long> {
 
     @Query("SELECT u FROM User u WHERE 'ROLE_USER' MEMBER OF u.roles")
     List<User> getNonAdminUsers();
+
+
+    @Query("SELECT u.favouritePokemonsList FROM User u WHERE u.id = ?1")
+    List<PokemonEntity> getFavouritePokemonByUserId(Long userId);
+
+    @Query("SELECT u.myPokemonsList FROM User u WHERE u.id = ?1")
+    List<PokemonEntity> getUserPokemonByUserId(Long userId);
+
+    @Query("SELECT u.myPokemonWishList FROM User u WHERE u.id = ?1")
+    List<PokemonEntity> getWishListByUserId(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.codecool.pokemoncompanion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,10 +32,13 @@ public class PokemonEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<TypeWithIdAndPokemonEntity> types = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany
     private Set<User> userPokemons = new HashSet<>();
+    @JsonIgnore
     @ManyToMany
     private Set<User> userWishListPokemons = new HashSet<>();
+    @JsonIgnore
     @ManyToMany
     private Set<User> userFavPokemons = new HashSet<>();
 

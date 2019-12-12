@@ -1,6 +1,7 @@
 package com.codecool.pokemoncompanion.controller;
 
-import com.codecool.pokemoncompanion.model.*;
+import com.codecool.pokemoncompanion.model.PokemonEntity;
+import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
 import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
@@ -41,7 +42,7 @@ public class PokeListController {
 
     @GetMapping("/")
     public List<ResultItemWithId> pokes() {
-        return pokeAPIService.getPokemons(900, 0);
+        return pokeAPIService.getPokemons(40, 0);
     }
 
 

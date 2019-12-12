@@ -50,11 +50,10 @@ public class PokeSaveService {
         favourites.save(pokemon);
     }
 
-    public void addToManager(Integer cp, Integer quality) {
-        ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality);
+    public void addToManager(Integer cp, String quality, int managedPokemonId) {
+        ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality, pokeAPIService.getPokemonByID(managedPokemonId));
         managedPokemonRepositroy.save(managedPokemon);
     }
-
 
     private PokemonEntity createPokemonForOrm(User user, int pokemonId) {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);

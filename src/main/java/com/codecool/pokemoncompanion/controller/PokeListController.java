@@ -42,7 +42,7 @@ public class PokeListController {
 
     @GetMapping("/")
     public List<ResultItemWithId> pokes() {
-        return pokeAPIService.getPokemons(40, 0);
+        return pokeAPIService.getPokemons(900, 0);
     }
 
 

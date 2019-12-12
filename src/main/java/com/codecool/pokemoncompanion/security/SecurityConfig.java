@@ -27,12 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
+                .antMatchers(HttpMethod.GET, "/pokemon/").permitAll()
                 .antMatchers(HttpMethod.GET, "/pokemon/name/**").authenticated()
                 .antMatchers(HttpMethod.PUT, "/mypokemon/add/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/pokemon/ivcalculator").authenticated()
-                //TODO
+                .antMatchers(HttpMethod.GET, "/user/**").authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtFilter(jwtService), UsernamePasswordAuthenticationFilter.class);

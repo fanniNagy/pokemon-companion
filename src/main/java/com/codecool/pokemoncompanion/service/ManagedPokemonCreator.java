@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class ManagedPokemonCreator {
 
-    public ManagedPokemon managedPokemonCreator(Integer cp, String quality, Pokemon pokemon) {
+    public ManagedPokemon managedPokemonCreator(String quality, Pokemon pokemon) {
         return ManagedPokemon.builder()
                 .id((long) pokemon.getId())
                 .name(pokemon.getName())
@@ -22,7 +22,6 @@ public class ManagedPokemonCreator {
                 .abilities(pokemon.getAbilities().stream().map(AbilitiesItem::getAbility).map(AbilityWithIdAndPokemonEntity::new).collect(Collectors.toSet()))
                 .weight(pokemon.getWeight())
                 .height(pokemon.getHeight())
-                .cp(cp)
                 .quality(quality)
                 .build();
 

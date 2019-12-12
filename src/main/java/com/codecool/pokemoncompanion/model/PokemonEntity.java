@@ -1,9 +1,9 @@
 package com.codecool.pokemoncompanion.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.CascadeType;
@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Component
 @Entity
-@Builder
+@SuperBuilder
 public class PokemonEntity {
 
     @Id

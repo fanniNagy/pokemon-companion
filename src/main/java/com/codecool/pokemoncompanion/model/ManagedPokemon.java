@@ -24,8 +24,10 @@ public class ManagedPokemon extends PokemonEntity {
     Long id;
 
     String name;
-    Integer cp;
+
     String quality;
+
+
     String comment;
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<TypeWithIdAndPokemonEntity> types = new HashSet<>();

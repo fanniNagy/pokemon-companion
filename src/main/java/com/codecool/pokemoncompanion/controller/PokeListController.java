@@ -72,6 +72,11 @@ public class PokeListController {
         pokeSaveService.addToMyWishList(user, pokemonId);
     }
 
+    @PutMapping("/manager/add/{id}")
+    public void addManagedPokemonToManager(@PathVariable("id") int managedPokemonId, @RequestParam("quality") String quality, @RequestParam("cp") Integer cp) {
+        pokeSaveService.addToManager(cp, quality, managedPokemonId);
+    }
+
     @GetMapping("/mypokemon/")
     public List<PokemonEntity> getMyMyPokemons() {
         return null;

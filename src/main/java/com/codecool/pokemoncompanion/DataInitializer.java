@@ -29,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
                 .myPokemonsList(new ArrayList<>())
                 .favouritePokemonsList(new ArrayList<>())
                 .myPokemonWishList(new ArrayList<>())
-                .banned(true)
+                .banned(false)
                 .build();
         userRepository.save(user);
 

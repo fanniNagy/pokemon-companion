@@ -28,6 +28,7 @@ public class PokeSaveService {
 
     @Autowired
     private PokemonCreator pokemonCreator;
+
     @Autowired
     private ManagedPokemonRepositroy managedPokemonRepositroy;
 
@@ -52,11 +53,6 @@ public class PokeSaveService {
 
     public void addToManager(Integer cp, String quality, int managedPokemonId) {
         ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality, pokeAPIService.getPokemonByID(managedPokemonId));
-        managedPokemonRepositroy.save(managedPokemon);
-    }
-
-    public void addToManager(Integer cp, Integer quality) {
-        ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality);
         managedPokemonRepositroy.save(managedPokemon);
     }
 

@@ -1,16 +1,12 @@
 package com.codecool.pokemoncompanion.controller;
 
 import com.codecool.pokemoncompanion.model.PokemonEntity;
-import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
 import com.codecool.pokemoncompanion.model.wrapper.ResultItemWithId;
-import com.codecool.pokemoncompanion.repository.MyFavouriteRepository;
-import com.codecool.pokemoncompanion.repository.MyPokemonRepository;
-import com.codecool.pokemoncompanion.repository.MyWishlistRepostitory;
-import com.codecool.pokemoncompanion.repository.UserRepository;
 import com.codecool.pokemoncompanion.service.PokeAPIService;
 import com.codecool.pokemoncompanion.service.PokeSaveService;
 import com.codecool.pokemoncompanion.service.PokemonCreator;
+import com.codecool.pokemoncompanion.service.UsersPokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,21 +19,15 @@ public class PokeListController {
 
     private PokemonCreator pokemonCreator;
     private PokeAPIService pokeAPIService;
-    private MyPokemonRepository myPokemonRepository;
-    private MyWishlistRepostitory wishlist;
-    private MyFavouriteRepository favourites;
-    private UserRepository userRepository;
     private PokeSaveService pokeSaveService;
+    private UsersPokemonService usersPokemonService;
 
     @Autowired
-    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, MyPokemonRepository myPokemonRepository, MyWishlistRepostitory wishlist, MyFavouriteRepository favourites, UserRepository userRepository, PokeSaveService pokeSaveService) {
+    public PokeListController(PokemonCreator pokemonCreator, PokeAPIService pokeAPIService, PokeSaveService pokeSaveService, UsersPokemonService usersPokemonService) {
         this.pokemonCreator = pokemonCreator;
         this.pokeAPIService = pokeAPIService;
-        this.myPokemonRepository = myPokemonRepository;
-        this.wishlist = wishlist;
-        this.favourites = favourites;
-        this.userRepository = userRepository;
         this.pokeSaveService = pokeSaveService;
+        this.usersPokemonService = usersPokemonService;
     }
 
     @GetMapping("/")
@@ -54,36 +44,33 @@ public class PokeListController {
     }
 
     @PutMapping("/mypokemon/add/{id}")
-    public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        pokeSaveService.addToMyPokemonList(user,pokemonId);
+    public void pokemonToMyPokemonList(@PathVariable("id") int pokemonId) throws Exception {
+        pokeSaveService.addToMyPokemonList(pokemonId);
     }
 
     @PutMapping("/favourites/add/{id}")
-    public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId) {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        pokeSaveService.addToMyFavouriteList(user, pokemonId);
+    public void pokemonToMyPokemonFavorite(@PathVariable("id") int pokemonId) throws Exception {
+        pokeSaveService.addToMyFavouriteList(pokemonId);
     }
 
-    @PostMapping("/wishlist/add/{id}")
-    public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId) {
-        User user = userRepository.findFirstByOrderByEmailAsc();
-        pokeSaveService.addToMyWishList(user, pokemonId);
+    @PutMapping("/wishlist/add/{id}")
+    public void pokemonToMyPokemonWishList(@PathVariable("id") int pokemonId) throws Exception {
+        pokeSaveService.addToMyWishList(pokemonId);
     }
 
     @GetMapping("/mypokemon/")
     public List<PokemonEntity> getMyMyPokemons() {
-        return null;
+        return usersPokemonService.getMyPokemonsOfUser();
     }
 
     @GetMapping("/favourites/")
     public List<PokemonEntity> getMyFavourites() {
-        return null;
+        return usersPokemonService.getFavouritePokemonsOfUser();
     }
 
     @GetMapping("/wishlist/")
     public List<PokemonEntity> getMyWishList() {
-        return null;
+        return usersPokemonService.getWishListPokemonsOfUser();
     }
 
 }

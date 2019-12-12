@@ -1,18 +1,23 @@
 package com.codecool.pokemoncompanion.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Component
+@SuperBuilder
 @Entity
 public class PokemonEntity {
 

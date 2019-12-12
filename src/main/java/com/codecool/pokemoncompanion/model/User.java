@@ -38,6 +38,22 @@ public class User {
         return id.equals(user.id);
     }
 
+    @ManyToMany
+    public Set<User> friends = new HashSet<>();
+
+    @OneToMany
+    public Set<User> friendRequests = new HashSet<>();
+
+    public void requestFriendship(User user) {
+        user.friendRequests.add(this);
+    }
+
+    public void confirmFriends(User user) {
+        this.friendRequests.remove(user);
+        user.friends.add(this);
+        this.friends.add(user);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

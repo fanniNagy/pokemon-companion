@@ -1,6 +1,6 @@
 package com.codecool.pokemoncompanion.controller;
 
-import com.codecool.pokemoncompanion.model.ManagedPokemon;
+import com.codecool.pokemoncompanion.model.Holder;
 import com.codecool.pokemoncompanion.model.PokemonEntity;
 import com.codecool.pokemoncompanion.model.User;
 import com.codecool.pokemoncompanion.model.generated.Pokemon;
@@ -72,10 +72,9 @@ public class PokeListController {
         pokeSaveService.addToMyWishList(user, pokemonId);
     }
 
-
     @PutMapping("/manager/add/{id}")
-    public void addManagedPokemonToManager(@PathVariable("id") int managedPokemonId, @RequestBody String quality) {
-        pokeSaveService.addToManager(quality, managedPokemonId);
+    public void addManagedPokemonToManager(@PathVariable("id") int managedPokemonId, @RequestBody Holder holder) {
+        pokeSaveService.addToManager(holder.getCp(), holder.getQuality(), managedPokemonId);
     }
 
     @GetMapping("/mypokemon/")

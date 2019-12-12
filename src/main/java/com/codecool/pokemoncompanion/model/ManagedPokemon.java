@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,6 +33,8 @@ public class ManagedPokemon extends PokemonEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<AbilityWithIdAndPokemonEntity> abilities = new HashSet<>();
 
+    Integer cp;
+    Integer quality;
 
     @ManyToMany
     private Set<User> userManagedPokemons = new HashSet<>();

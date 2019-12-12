@@ -55,6 +55,12 @@ public class PokeSaveService {
         managedPokemonRepositroy.save(managedPokemon);
     }
 
+    public void addToManager(Integer cp, Integer quality) {
+        ManagedPokemon managedPokemon = managedPokemonCreator.managedPokemonCreator(cp, quality);
+        managedPokemonRepositroy.save(managedPokemon);
+    }
+
+
     private PokemonEntity createPokemonForOrm(User user, int pokemonId) {
         PokemonEntity pokemon = getMyPokemonById(pokemonId);
         pokemon.getAbilities().forEach(ability -> ability.getPokemonEntity().add(pokemon));

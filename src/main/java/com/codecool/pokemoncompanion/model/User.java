@@ -1,5 +1,7 @@
 package com.codecool.pokemoncompanion.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,9 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -26,8 +26,10 @@ public class User {
     @Column(unique = true)
     private String name;
     private String email;
-    @NotNull
-    private String password;
+
+    @JsonBackReference
+    @ManyToMany
+    public Set<User> friends = new HashSet<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
     private boolean banned;
@@ -50,6 +52,23 @@ public class User {
         return Objects.equals(id, user.id) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(email, user.email);
+    }
+
+    @JsonBackReference
+    @OneToMany
+    public Set<User> friendRequests = new HashSet<>();
+    @JsonIgnore
+    @NotNull
+    private String password;
+
+    public void requestFriendship(User user) {
+        user.friendRequests.add(this);
+    }
+
+    public void confirmFriends(User user) {
+        this.friendRequests.remove(user);
+        user.friends.add(this);
+        this.friends.add(user);
     }
 
     @Override

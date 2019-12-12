@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @AllArgsConstructor
@@ -32,6 +34,26 @@ public class DataInitializer implements CommandLineRunner {
                 .banned(false)
                 .build();
         userRepository.save(user);
+        User user2 = User.builder()
+                .email("user2@cc.com")
+                .name("user2")
+                .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("user"))
+                .roles(Collections.singletonList("ROLE_USER"))
+                .myPokemonsList(new ArrayList<>())
+                .favouritePokemonsList(new ArrayList<>())
+                .myPokemonWishList(new ArrayList<>())
+                .build();
+        userRepository.save(user2);
+        User user3 = User.builder()
+                .email("user3@cc.com")
+                .name("user3")
+                .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("user"))
+                .roles(Collections.singletonList("ROLE_USER"))
+                .myPokemonsList(new ArrayList<>())
+                .favouritePokemonsList(new ArrayList<>())
+                .myPokemonWishList(new ArrayList<>())
+                .build();
+        userRepository.save(user3);
 
         for (int i = 0; i < 20; i++) {
             userRepository.save(User.builder()
@@ -56,6 +78,8 @@ public class DataInitializer implements CommandLineRunner {
                 .myPokemonWishList(new ArrayList<>())
                 .banned(false)
                 .build();
+        admin.setFriends(Stream.of(user, user2).collect(Collectors.toSet()));
+        admin.setFriendRequests(Stream.of(user3).collect(Collectors.toSet()));
         userRepository.save(admin);
     }
 }

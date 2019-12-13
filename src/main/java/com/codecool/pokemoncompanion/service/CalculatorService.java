@@ -2,7 +2,6 @@ package com.codecool.pokemoncompanion.service;
 
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -11,7 +10,6 @@ import java.text.DecimalFormat;
 public class CalculatorService {
 
 
-    @PostMapping("/ivcalculator")
     public String calculateIV(Integer hp, Integer attack, Integer defense) {
         double divider = 45;
         DecimalFormat decimalFormat = new DecimalFormat("#");

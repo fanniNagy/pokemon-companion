@@ -55,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
                 .build();
         userRepository.save(user3);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 5; i < 20; i++) {
             userRepository.save(User.builder()
                     .email("manyuser" + i + "@cc.com")
                     .name("user" + i)

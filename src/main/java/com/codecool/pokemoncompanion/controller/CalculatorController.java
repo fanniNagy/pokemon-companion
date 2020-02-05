@@ -1,15 +1,13 @@
 package com.codecool.pokemoncompanion.controller;
 
+import com.codecool.pokemoncompanion.model.IVValues;
 import com.codecool.pokemoncompanion.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/pokemon")
 public class CalculatorController {
 
@@ -18,8 +16,9 @@ public class CalculatorController {
 
 
     @PostMapping("/ivcalculator")
-    public ResponseEntity sendIvValue(@RequestParam("hp") Integer hp, @RequestParam("attack") Integer attack, @RequestParam("defense") Integer defense) {
-        return ResponseEntity.ok().body(calculatorService.calculateIV(hp, attack, defense));
+    public String sendIvValue(@RequestBody IVValues ivValues) {
+        String result = calculatorService.calculateIV(ivValues.getHp(), ivValues.getAttack(), ivValues.getDefense());
+        return result;
     }
 
 }

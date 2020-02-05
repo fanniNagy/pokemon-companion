@@ -3,13 +3,12 @@ package com.codecool.pokemoncompanion.repository;
 import com.codecool.pokemoncompanion.model.PokemonEntity;
 import com.codecool.pokemoncompanion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -33,7 +32,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.friendRequests from User u where u.name = :name")
     Set<User> findPendingFriendsByName(@Param("name") String name);
 
-}
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.banned = true WHERE u.id = ?1")

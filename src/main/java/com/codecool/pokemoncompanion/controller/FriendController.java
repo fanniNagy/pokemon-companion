@@ -14,11 +14,14 @@ import java.util.Set;
 @RequestMapping("/user")
 public class FriendController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final FriendService friendService;
 
     @Autowired
-    FriendService friendService;
+    public FriendController(UserRepository userRepository, FriendService friendService) {
+        this.userRepository = userRepository;
+        this.friendService = friendService;
+    }
 
     @PutMapping("/{userId}/request-friend/{friendId}")
     public void requestFriendship(@PathVariable("userId") Long userid, @PathVariable("friendId") Long friendId) {

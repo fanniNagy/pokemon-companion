@@ -5,9 +5,8 @@ import com.codecool.pokemoncompanion.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/pokemon")
 public class CalculatorController {
 
@@ -17,8 +16,7 @@ public class CalculatorController {
 
     @PostMapping("/ivcalculator")
     public String sendIvValue(@RequestBody IVValues ivValues) {
-        String result = calculatorService.calculateIV(ivValues.getHp(), ivValues.getAttack(), ivValues.getDefense());
-        return result;
+        return calculatorService.calculateIV(ivValues.getHp(), ivValues.getAttack(), ivValues.getDefense());
     }
 
 }

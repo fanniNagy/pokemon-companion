@@ -19,10 +19,10 @@ import java.util.stream.Stream;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         User user = User.builder()
                 .email("user@cc.com")
                 .name("user")
@@ -55,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
                 .build();
         userRepository.save(user3);
 
-        for (int i = 5; i < 20; i++) {
+        for (int i = 4; i < 20; i++) {
             userRepository.save(User.builder()
                     .email("manyuser" + i + "@cc.com")
                     .name("user" + i)

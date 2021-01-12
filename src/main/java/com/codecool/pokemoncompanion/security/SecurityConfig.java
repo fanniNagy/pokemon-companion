@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
+               .httpBasic().disable()
                 .csrf().disable()
                 .cors()
                 .and()
@@ -31,15 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/pokemon/").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
-                .antMatchers(HttpMethod.GET, "/pokemon/name/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/mypokemon/add/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/user/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "pokemon/mypokemon/add/**").authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/ivcalculator").authenticated()
-                .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .antMatchers(HttpMethod.GET, "/pokemon/**").authenticated()
                 .antMatchers(HttpMethod.PUT, "/pokemon/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/user/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/user/**").authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtFilter(jwtService), UsernamePasswordAuthenticationFilter.class)

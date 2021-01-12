@@ -22,8 +22,7 @@ public class Util {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) throw new Exception();
         String username = authentication.getName();
-        User user = userRepository.findByName(username);
-        return user;
+        return userRepository.findByName(username);
     }
 
 }

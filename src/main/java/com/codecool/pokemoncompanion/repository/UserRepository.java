@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,10 +15,7 @@ import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findFirstByOrderByEmailAsc();
-
     User findByName(String name);
-
 
     User findUserById(Long id);
 
@@ -33,16 +31,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.friendRequests from User u where u.name = :name")
     Set<User> findPendingFriendsByName(@Param("name") String name);
 
-}
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.banned = true WHERE u.id = ?1")
     void banUserByUserId(Long id);
 
-
     @Query("SELECT u FROM User u WHERE 'ROLE_USER' MEMBER OF u.roles")
     List<User> getNonAdminUsers();
-
 
     @Query("SELECT u.favouritePokemonsList FROM User u WHERE u.id = ?1")
     List<PokemonEntity> getFavouritePokemonByUserId(Long userId);

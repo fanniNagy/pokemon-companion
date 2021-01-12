@@ -55,7 +55,7 @@ public class User {
     }
 
     @JsonBackReference
-    @OneToMany
+    @ManyToMany
     public Set<User> friendRequests = new HashSet<>();
     @JsonIgnore
     @NotNull

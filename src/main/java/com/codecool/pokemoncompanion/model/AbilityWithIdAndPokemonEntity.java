@@ -25,6 +25,8 @@ public class AbilityWithIdAndPokemonEntity extends Ability {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "abilities")
+/*            @ToString.Exclude
+            @EqualsAndHashCode.Exclude*/
     Set<PokemonEntity> pokemonEntity = new HashSet<>();
 
     private String name;
